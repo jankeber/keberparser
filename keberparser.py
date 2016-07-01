@@ -4,6 +4,7 @@ import urllib
 import sqlite3
 import datetime
 import os
+import tweepy
 
 if not os.path.exists('database'):
     conn = sqlite3.connect('database')
@@ -62,4 +63,31 @@ primorske_feed = urllib.urlopen(primorske_url, 'html.parser')
 primorske_soup = BeautifulSoup(primorske_feed)
 primorske_find_all_h4 = primorske_soup.find_all("h4")
 for primorske_a in primorske_find_all_h4:
-    print primorske_a.get_text()
+    print primorske_a.get_text().encode('UTF-8')
+
+consumer_key = ''
+consumer_secret = ''
+access_token = ''
+access_token_secret = ''
+
+auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+auth.set_access_token(access_token, access_token_secret)
+
+tweepy_api = tweepy.API(auth)
+
+print '====== LAST TWEETS ======='
+public_tweets = tweepy_api.home_timeline()
+for tweet in public_tweets:
+    print tweet.text.encode('UTF-8')
+
+print '========= Snowden Tweets ======='
+
+user = tweepy_api.get_user('Snowden')
+print user.screen_name.encode('UTF-8')
+print '------------------'
+
+tweets = tweepy_api.user_timeline(screen_name = 'Snowden', count = 50, include_rts = True)
+
+for status in tweets:
+
+    print status.text.encode('UTF-8')
