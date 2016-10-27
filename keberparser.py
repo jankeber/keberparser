@@ -13,7 +13,7 @@ if not os.path.exists('database'):
 conn = sqlite3.connect('database')
 conn.text_factory = str
 page = urllib.urlopen('http://193.95.233.105/econova1/Default.aspx?mesto=Koper');
-pagesoup = BeautifulSoup(page)
+pagesoup = BeautifulSoup(page, "html.parser")
 
 page_title = str(pagesoup.find(id="MainContent_Label14").get_text().encode('utf-8'))
 air_temp = str(pagesoup.find(id="MainContent_Label1").get_text().encode('utf-8'))
@@ -59,8 +59,8 @@ print ''
 
 print '====== PRIMORSKE NOVICE FEED ======='
 primorske_url = "Http://primorske.si/"
-primorske_feed = urllib.urlopen(primorske_url, 'html.parser')
-primorske_soup = BeautifulSoup(primorske_feed)
+primorske_feed = urllib.urlopen(primorske_url)
+primorske_soup = BeautifulSoup(primorske_feed, "html.parser")
 primorske_find_all_h4 = primorske_soup.find_all("h4")
 for primorske_a in primorske_find_all_h4:
     print primorske_a.get_text().encode('UTF-8')
