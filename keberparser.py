@@ -1,3 +1,4 @@
+from tkeys import *
 import praw
 from bs4 import BeautifulSoup
 import urllib
@@ -64,11 +65,6 @@ primorske_soup = BeautifulSoup(primorske_feed, "html.parser")
 primorske_find_all_h4 = primorske_soup.find_all("h4")
 for primorske_a in primorske_find_all_h4:
     print primorske_a.get_text().encode('UTF-8')
-
-consumer_key = ''
-consumer_secret = ''
-access_token = ''
-access_token_secret = ''
 
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
